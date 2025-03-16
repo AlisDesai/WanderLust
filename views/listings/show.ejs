@@ -1,0 +1,185 @@
+<% layout("/layouts/boilerplate") %>
+
+<style>
+  body {
+    font-family: "Arial", sans-serif;
+    background-color: #f4f7fa;
+    margin: 20px;
+    padding: 20px;
+  }
+
+  .row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .col-8 {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  h3 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+
+  .card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: cover;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .card-body {
+    padding: 20px;
+  }
+
+  .card-text {
+    font-size: 1.5rem;
+    margin: 10px 0;
+    color: #555;
+  }
+
+  a {
+    display: inline-block;
+    font-size: 1.6rem;
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 12px 20px;
+    border: 2px solid #007bff;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    background-color: #f4f7fa;
+    margin-top: 20px;
+  }
+
+  a:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  button {
+    font-size: 1.6rem;
+    background-color: #dc3545;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 20px;
+  }
+
+  button:hover {
+    background-color: #c82333;
+  }
+
+  form {
+    text-align: center;
+    margin-top: 20px;
+  }
+</style>
+
+<body>
+  <div class="row">
+    <div class="col-8 offset-2">
+      <h3><%= listing.title %></h3>
+      <div class="cards">
+        <div class="card">
+          <img
+            class="card-img-top show-img"
+            src="<%=listing.image.url%>"
+            alt="Card image cap"
+          />
+          <div class="card-body">
+            <p class="card-text"><%= listing.description %></p>
+            <p class="card-text">Price: <%= listing.price %></p>
+            <p class="card-text">Country: <%= listing.country %></p>
+            <p class="card-text">Location: <%= listing.location %></p>
+          </div>
+        </div>
+      </div>
+
+      <a href="/listings/<%=listing._id%>/edit">Update</a>
+
+      <form action="/listings/<%=listing._id%>?_method=DELETE" method="post">
+        <button>Delete</button>
+      </form>
+    </div>
+
+    <div
+      style="
+        max-width: 600px;
+        margin: 20px auto;
+        padding: 20px;
+        border-radius: 10px;
+        background: #f9f9f9;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      "
+    >
+      <h4 style="color: #333; margin-bottom: 15px">Leave A Review</h4>
+      <form>
+        <div>
+          <label for="rating" class="form-label form-range">Rating</label>
+          <input
+            type="range"
+            min="1"
+            max="5"
+            name="rating"
+            id="review[rating]"
+            style="width: 100%"
+          />
+        </div>
+        <div style="margin-bottom: 15px">
+          <label
+            for="comment"
+            class="form-label"
+            style="display: block; font-weight: bold"
+            >Comments</label
+          >
+          <textarea
+            id="comment"
+            name="review[comment]"
+            style="
+              width: 100%;
+              padding: 8px;
+              border-radius: 5px;
+              border: 1px solid #ccc;
+            "
+            class="form-control"
+          ></textarea>
+        </div>
+        <button
+          style="
+            background: #007bff;
+            color: #fff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          "
+        >
+          Submit
+        </button>
+      </form>
+    </div>
+  </div>
+</body>
