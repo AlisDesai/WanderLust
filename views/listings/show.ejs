@@ -95,6 +95,37 @@
     text-align: center;
     margin-top: 20px;
   }
+
+  .review-title {
+    margin-top: 25px;
+    font-size: 1.8rem;
+    color: #2c3e50;
+    text-align: center;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+  }
+
+  .review-title::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(to right, #3498db, #2980b9);
+    border-radius: 2px;
+  }
+
+  .card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+
+  .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
 </style>
 
 <body>
@@ -136,14 +167,19 @@
       "
     >
       <h4 style="color: #333; margin-bottom: 15px">Leave A Review</h4>
-      <form>
+      <form
+        action="/listings/<%=listing._id%>/reviews"
+        method="post"
+        novalidate
+        class="needs-validation"
+      >
         <div>
           <label for="rating" class="form-label form-range">Rating</label>
           <input
             type="range"
             min="1"
             max="5"
-            name="rating"
+            name="review[rating]"
             id="review[rating]"
             style="width: 100%"
           />
@@ -164,8 +200,10 @@
               border-radius: 5px;
               border: 1px solid #ccc;
             "
+            required
             class="form-control"
           ></textarea>
+          <div class="invalid-feedback">Please Enter Review in Empty</div>
         </div>
         <button
           style="
@@ -180,6 +218,35 @@
           Submit
         </button>
       </form>
+      <br />
+      <div class="container mt-4">
+        <h4 class="review-title">Customer Reviews</h4>
+        <div class="row">
+          <% listing.reviews.forEach(review => { %>
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm border-0">
+              <div class="card-body">
+                <h5 class="card-title text-primary">Anonymous User</h5>
+                <p class="card-text"><%= review.comment %></p>
+                <div class="rating text-warning">
+                  <% for (let i = 0; i < review.rating; i++) { %> ⭐ <% } %> <%
+                  for (let i = review.rating; i < 5; i++) { %> ☆ <% } %>
+                </div>
+                <small class="text-muted"
+                  >Posted on: <%= review.createdAt.toDateString() %></small
+                >
+              </div>
+            </div>
+          </div>
+          <form
+            action="listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
+            method="post"
+          >
+            <button class="button">Delete</button>
+          </form>
+          <% }); %>
+        </div>
+      </div>
     </div>
   </div>
 </body>
