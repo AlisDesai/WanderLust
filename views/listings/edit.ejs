@@ -1,150 +1,283 @@
+<!-- <% layout("/layouts/boilerplate") %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Your Listings</title>
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+      background-color: #f8fafc;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      color: #0056b3;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-size: 1rem;
+      font-weight: 500;
+      color: #555;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px 15px;
+      margin: 5px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 1rem;
+      background-color: #f9f9f9;
+      transition: all 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #0056b3;
+      background-color: #fff;
+      outline: none;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    textarea {
+      resize: none;
+      height: 120px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background-color: #007bff;
+      color: #ffffff;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+      transform: translateY(-2px);
+    }
+
+    button:active {
+      transform: translateY(0);
+    }
+
+    footer {
+      margin-top: 30px;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    footer a {
+      color: #0056b3;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    footer a:hover {
+      color: #003d80;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>Update a Listing</h1>
+    <form
+      method="POST"
+      action="/listings/<%= listing._id %>?_method=PUT"
+      novalidate
+      class="needs-validation"
+    >
+      <div class="form-group">
+        <label for="title">Title</label>
+        <input
+          type="text"
+          id="title"
+          name="listing[title]"
+          value="<%= listing.title %>"
+          required
+          class="form-control"
+        />
+
+        <div class="invalid-feedback">Title is required.</div>
+        <div class="valid-feedback">Mast Edit Karyu!</div>
+      </div>
+      <div class="form-group">
+        <textarea name="listing[description]" required>
+<%= listing.description %></textarea
+        >
+        <div class="invalid-feedback">Description is required.</div>
+        <div class="valid-feedback">Mast Edit Karyu!</div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="listing[image]"
+          value="<%= listing.image ? (typeof listing.image === 'string' ? listing.image : listing.image.url) : '' %>"
+          required
+        />
+        <div class="invalid-feedback">Image is required.</div>
+        <div class="valid-feedback">Mast Edit Karyu!</div>
+      </div>
+      <div class="form-group">
+        <input
+          type="number"
+          name="listing[price]"
+          value="<%= listing.price %>"
+          required
+        />
+        <div class="invalid-feedback">Price is required.</div>
+        <div class="valid-feedback">Mast Edit Karyu!</div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="listing[country]"
+          value="<%= listing.country %>"
+          required
+        />
+        <div class="invalid-feedback">Country is required.</div>
+        <div class="valid-feedback">Mast Edit Karyu!</div>
+      </div>
+      <div class="form-group">
+        <input
+          type="text"
+          name="listing[location]"
+          value="<%= listing.location %>"
+          required
+        />
+        <div class="invalid-feedback">Location is required.</div>
+        <div class="valid-feedback">Mast Edit Karyu!</div>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</body> -->
+
+
 <% layout("/layouts/boilerplate") %>
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Your Listings</title>
-        <style>
-            body {
-                font-family: 'Poppins', sans-serif;
-                background-color: #f8fafc;
-                color: #333;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                max-width: 600px;
-                margin: 50px auto;
-                background-color: #ffffff;
-                padding: 40px;
-                border-radius: 12px;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-            }
-
-            h1 {
-                text-align: center;
-                font-size: 2rem;
-                color: #0056b3;
-                margin-bottom: 20px;
-                font-weight: 600;
-            }
-
-            .form-group {
-                margin-bottom: 20px;
-            }
-
-            label {
-                font-size: 1rem;
-                font-weight: 500;
-                color: #555;
-                display: block;
-                margin-bottom: 8px;
-            }
-
-            input,
-            textarea {
-                width: 100%;
-                padding: 12px 15px;
-                margin: 5px 0;
-                border: 1px solid #ddd;
-                border-radius: 8px;
-                font-size: 1rem;
-                background-color: #f9f9f9;
-                transition: all 0.3s ease;
-            }
-
-            input:focus,
-            textarea:focus {
-                border-color: #0056b3;
-                background-color: #fff;
-                outline: none;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            }
-
-            textarea {
-                resize: none;
-                height: 120px;
-            }
-
-            button {
-                display: block;
-                width: 100%;
-                padding: 15px;
-                background-color: #007bff;
-                color: #ffffff;
-                border: none;
-                border-radius: 10px;
-                font-size: 1.2rem;
-                font-weight: bold;
-                cursor: pointer;
-                transition: background-color 0.3s ease, transform 0.2s ease;
-            }
-
-            button:hover {
-                background-color: #0056b3;
-                transform: translateY(-2px);
-            }
-
-            button:active {
-                transform: translateY(0);
-            }
-
-            footer {
-                margin-top: 30px;
-                text-align: center;
-                font-size: 0.9rem;
-                color: #666;
-            }
-
-            footer a {
-                color: #0056b3;
-                text-decoration: none;
-                font-weight: 500;
-                transition: color 0.3s ease;
-            }
-
-            footer a:hover {
-                color: #003d80;
-            }
-        </style>
-    </head>
-
-    <body>
-        <div class="container">
-            <h1>Update a Listing</h1>
-            <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" novalidate class="needs-validation">
-                <div class="form-group">
-                    <input type="text" name="NewTitle" value="<%= listing.title %>" required>
-                    <div class="invalid-feedback">Title is required.</div>
-                    <div class="valid-feedback">Mast Edit Karyu!</div>
-                </div>
-                <div class="form-group">
-                    <textarea name="NewDes" required><%= listing.description %></textarea>
-                    <div class="invalid-feedback">Description is required.</div>
-                    <div class="valid-feedback">Mast Edit Karyu!</div>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="Newimg" value="<%= listing.image ? listing.image.url : '' %>" required>
-                    <div class="invalid-feedback">Image is required.</div>
-                    <div class="valid-feedback">Mast Edit Karyu!</div>
-                </div>
-                <div class="form-group">
-                    <input type="number" name="NewPrice" value="<%= listing.price %>" required>
-                    <div class="invalid-feedback">Price is required.</div>
-                    <div class="valid-feedback">Mast Edit Karyu!</div>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="NewCountry" value="<%= listing.country %>" required>
-                    <div class="invalid-feedback">Country is required.</div>
-                    <div class="valid-feedback">Mast Edit Karyu!</div>
-                </div>
-                <div class="form-group">
-                    <input type="text" name="NewLocation" value="<%= listing.location %>" required>
-                    <div class="invalid-feedback">Location is required.</div>
-                    <div class="valid-feedback">Mast Edit Karyu!</div>
-                </div>
-                <button type="submit">Submit</button>
-            </form>
-        </div>
-    </body>
+<div class="container">
+  <h1>Update a Listing</h1>
+  <form
+    method="POST"
+    action="/listings/<%= listing._id %>?_method=PUT"
+    novalidate
+    class="needs-validation"
+  >
+    <div class="form-group">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="listing[title]"
+        value="<%= listing.title %>"
+        required
+        class="form-control"
+      />
+      <div class="invalid-feedback">Title is required.</div>
+      <div class="valid-feedback">Mast Edit Karyu!</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea 
+        id="description" 
+        name="listing[description]" 
+        required 
+        class="form-control"
+      ><%= listing.description %></textarea>
+      <div class="invalid-feedback">Description is required.</div>
+      <div class="valid-feedback">Mast Edit Karyu!</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="image">Image URL</label>
+      <input
+        type="text"
+        id="image"
+        name="listing[image]"
+        value="<%= listing.image ? (typeof listing.image === 'string' ? listing.image : listing.image.url) : '' %>"
+        required
+        class="form-control"
+      />
+      <div class="invalid-feedback">Image is required.</div>
+      <div class="valid-feedback">Mast Edit Karyu!</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="price">Price</label>
+      <input
+        type="number"
+        id="price"
+        name="listing[price]"
+        value="<%= listing.price %>"
+        required
+        class="form-control"
+      />
+      <div class="invalid-feedback">Price is required.</div>
+      <div class="valid-feedback">Mast Edit Karyu!</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="country">Country</label>
+      <input
+        type="text"
+        id="country"
+        name="listing[country]"
+        value="<%= listing.country %>"
+        required
+        class="form-control"
+      />
+      <div class="invalid-feedback">Country is required.</div>
+      <div class="valid-feedback">Mast Edit Karyu!</div>
+    </div>
+    
+    <div class="form-group">
+      <label for="location">Location</label>
+      <input
+        type="text"
+        id="location"
+        name="listing[location]"
+        value="<%= listing.location %>"
+        required
+        class="form-control"
+      />
+      <div class="invalid-feedback">Location is required.</div>
+      <div class="valid-feedback">Mast Edit Karyu!</div>
+    </div>
+    
+    <button type="submit" class="btn-submit">Update Listing</button>
+  </form>
+</div>

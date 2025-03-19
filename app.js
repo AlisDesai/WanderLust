@@ -2,21 +2,18 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const path = require("path");
-const Listing = require("./models/listing.js"); // Corrected path
-const PORT = 8080;
 const ejsMate = require("ejs-mate");
+const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
-const { listingSchema, reviewSchema } = require("./schema.js");
+
+const Listing = require("./models/listing.js");
 const Review = require("./models/review.js");
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 
-const methodOverride = require("method-override");
-const { count } = require("console");
-const review = require("./models/review.js");
-
+// Middleware
 app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,31 +23,31 @@ app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
 // Database Connection
-main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/wanderlust");
 }
+main().catch((err) => console.log(err));
 
-// Root
-app.get(
-  "/",
-  wrapAsync(async (req, res) => {
-    res.send("Root!");
-  })
-);
+// Root Route
+app.get("/", (req, res) => {
+  res.send("Root!");
+});
 
+// Route Handlers
 app.use("/listings", listings);
-app.use("/listings/:id/reviews", reviews);
+app.use("/listings/:listingId/reviews", reviews);
 
-// if user go to invalid url
+// Handle Invalid URLs
 app.all("*", (req, res, next) => {
   next(new ExpressError(404, "Page Not Found"));
 });
-// Error handling
+
+// Error Handling Middleware
 app.use((err, req, res, next) => {
   let { status = 500, message = "Something Went Wrong!" } = err;
-  res.render("error.ejs", { err });
+  res.status(status).render("error.ejs", { err });
 });
 
-// Start the server
-app.listen(PORT, () => console.log("Hello, Future Billionare"));
+// Start the Server
+const PORT = 8080;
+app.listen(PORT, () => console.log(`Hello, Future Billionare`));

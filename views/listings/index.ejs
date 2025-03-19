@@ -1,20 +1,34 @@
 <% layout("/layouts/boilerplate") %>
 
-    <body>
-        <div class="row row-cols-lg-4 row-cols-md-2 row-cols-sm-1">
-            <% for(let list of allListing) { %>
-                <a href="/listings/<%= list._id%>" class="listings-link">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="<%= list.image.url %>" alt="Card image cap">
-                        <div class="card-body">
-                            <h5>
-                                <%= list.title%>
-                            </h5>
-                            <h6> Price = <%= list.price.toLocaleString("en-IN") %> / night
-                            </h6>
-                        </div>
-                    </div>
-                </a>
-                <% } %>
+<div class="listings-header">
+  <h2>Explore Our Listings</h2>
+  <p>
+    Find your perfect getaway from our curated collection of premium properties
+  </p>
+</div>
+
+<div class="listings-container">
+  <% for(let list of allListing) { %>
+  <a href="/listings/<%= list._id%>" class="listings-link">
+    <div class="listing-card">
+      <div class="card-image-container">
+        <img
+          class="card-image"
+          src="<%= list.image.url %>"
+          alt="<%= list.title %>"
+        />
+        <div class="location-badge">
+          <i class="fas fa-map-marker-alt"></i> <%= list.location %>
         </div>
-    </body>
+      </div>
+      <div class="card-content">
+        <h5 class="card-title"><%= list.title %></h5>
+        <h6 class="card-price">
+          <i class="fas fa-tag"></i> ₹<%= list.price.toLocaleString("en-IN") %>
+          <span>per night</span>
+        </h6>
+      </div>
+    </div>
+  </a>
+  <% } %>
+</div>

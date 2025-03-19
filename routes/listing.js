@@ -15,7 +15,6 @@ const validateListing = (req, res, next) => {
   } else next();
 };
 
-
 router.get(
   "/",
   wrapAsync(async (req, res) => {
@@ -53,19 +52,31 @@ router.put(
   validateListing,
   wrapAsync(async (req, res) => {
     let id = req.params.id;
-    let { NewTitle, NewDes, Newimg, NewPrice, NewCountry, NewLocation } =
-      req.body;
-    if (!req.body.listing) {
-      throw new ExpressError(400, "Please Enter All Field Data");
+
+    // Create an object that matches your schema's expectations
+    const listingData = {
+      listing: {
+        title: req.body.NewTitle,
+        description: req.body.NewDes,
+        image: { url: req.body.Newimg, filename: "custom_filename" },
+        price: req.body.NewPrice,
+        country: req.body.NewCountry,
+        location: req.body.NewLocation,
+      },
+    };
+
+    // Then validate this data
+    const { error } = listingSchema.validate(listingData);
+    if (error) {
+      throw new ExpressError(
+        400,
+        error.details.map((el) => el.message).join(", ")
+      );
     }
-    await Listing.findByIdAndUpdate(id, {
-      title: NewTitle,
-      description: NewDes,
-      image: { url: Newimg },
-      price: NewPrice,
-      country: NewCountry,
-      location: NewLocation,
-    });
+
+    // Then update with this data
+    await Listing.findByIdAndUpdate(id, listingData.listing);
+
     res.redirect("/listings");
   })
 );
@@ -81,11 +92,12 @@ router.get(
 );
 
 router.delete(
-  "/:id",
+  "/:id/:reviewId",
   wrapAsync(async (req, res) => {
-    let id = req.params.id;
-    await Listing.findByIdAndDelete(id);
-    res.redirect("/listings");
+    let { id, reviewId } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    await Review.findByIdAndDelete(reviewId);
+    res.json({ success: true, message: "Review deleted!" });
   })
 );
 
