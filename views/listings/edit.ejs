@@ -185,7 +185,6 @@
   </div>
 </body> -->
 
-
 <% layout("/layouts/boilerplate") %>
 
 <div class="container">
@@ -209,33 +208,40 @@
       <div class="invalid-feedback">Title is required.</div>
       <div class="valid-feedback">Mast Edit Karyu!</div>
     </div>
-    
+
     <div class="form-group">
       <label for="description">Description</label>
-      <textarea 
-        id="description" 
-        name="listing[description]" 
-        required 
+      <textarea
+        id="description"
+        name="listing[description]"
+        required
         class="form-control"
-      ><%= listing.description %></textarea>
+      >
+<%= listing.description %></textarea
+      >
       <div class="invalid-feedback">Description is required.</div>
       <div class="valid-feedback">Mast Edit Karyu!</div>
     </div>
-    
+
     <div class="form-group">
       <label for="image">Image URL</label>
       <input
         type="text"
         id="image"
-        name="listing[image]"
+        name="listing[image][url]"
         value="<%= listing.image ? (typeof listing.image === 'string' ? listing.image : listing.image.url) : '' %>"
         required
         class="form-control"
       />
+      <input
+        type="hidden"
+        name="listing[image][filename]"
+        value="filename_placeholder"
+      />
       <div class="invalid-feedback">Image is required.</div>
       <div class="valid-feedback">Mast Edit Karyu!</div>
     </div>
-    
+
     <div class="form-group">
       <label for="price">Price</label>
       <input
@@ -249,7 +255,7 @@
       <div class="invalid-feedback">Price is required.</div>
       <div class="valid-feedback">Mast Edit Karyu!</div>
     </div>
-    
+
     <div class="form-group">
       <label for="country">Country</label>
       <input
@@ -263,7 +269,7 @@
       <div class="invalid-feedback">Country is required.</div>
       <div class="valid-feedback">Mast Edit Karyu!</div>
     </div>
-    
+
     <div class="form-group">
       <label for="location">Location</label>
       <input
@@ -277,7 +283,7 @@
       <div class="invalid-feedback">Location is required.</div>
       <div class="valid-feedback">Mast Edit Karyu!</div>
     </div>
-    
+
     <button type="submit" class="btn-submit">Update Listing</button>
   </form>
 </div>
