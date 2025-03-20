@@ -6,6 +6,7 @@ const ejsMate = require("ejs-mate");
 const methodOverride = require("method-override");
 const wrapAsync = require("./utils/wrapAsync.js");
 const ExpressError = require("./utils/ExpressError.js");
+const cookieParser = require("cookie-parser");
 
 const Listing = require("./models/listing.js");
 const Review = require("./models/review.js");
@@ -14,6 +15,7 @@ const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
 
 // Middleware
+app.use(cookieParser("secretcode"));
 app.use(methodOverride("_method"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -30,7 +32,16 @@ main().catch((err) => console.log(err));
 
 // Root Route
 app.get("/", (req, res) => {
-  res.send("Root!");
+  res.cookie("Name", "Alis", { signed: true });
+  res.send("SEnt")
+});
+
+app.get("/name", (req, res) => {
+  if (req.signedCookies) {
+    res.send("Welcome " + req.signedCookies.Name);
+  }
+  console.dir(req.cookies);
+  res.send("Done");
 });
 
 // Route Handlers
